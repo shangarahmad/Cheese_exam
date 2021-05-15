@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>app 1</title>
+    <script src="./vue.global.js"></script>
+    <style>
+        .box {
+            width: 50px;
+            height: 50px;
+            /* background-color: aquamarine; */
+            float: left;
+        }
+        .box1 {
+            width: 50px;
+            float: left;
+            height: 50px;
+            /* background-color: gray; */
+        }
+        .row{
+            display: block;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div id="app1">
+        <div v-show="cellname">You clicked on {{ cellname }}</div>
+
+        <div v-for="i in 8" class="row">
+            <div v-for="(val, j) in col">
+                <template v-if="i % 2 == 0">
+                    <div @click="showcell(val+i)" v-if="j % 2 == 0" :style="{'background-color' : box}" class="box">
+                        <span v-if="j == 0" >{{(row.length - i)}}</span>
+                        <span v-if="i == 8">{{col[(j)]}}</span>
+                    </div>
+                    <div @click="showcell(val+i)" v-if="j % 2 !== 0" :style="{'background-color':  box1}" class="box1">
+                        <span v-if="j == 0">{{(row.length - i)}}</span>
+                        <span v-if="i == 8">{{col[(j)]}}</span>
+                    </div>
+                </template>
+                <template v-else>
+                    <div @click="showcell(val+i)" v-if="j % 2 == 0" :style="{'background-color' : box1}" class="box1">
+                        <span v-if="j == 0">{{(row.length - i)}}</span>
+                        <span v-if="i == 8">{{col[(j)]}}</span>
+                    </div>
+                    <div @click="showcell(val+i)" v-if="j % 2 !== 0" class="box" :style="{'background-color' : box}">
+                        <span v-if="j == 0">{{(row.length - i)}}</span>
+                        <span v-if="i == 8">{{col[(j)]}}</span>
+                    </div>
+                </template>
+            </div>
+            <br>
+        </div>
+        <br>
+        <br>
+        <input type="color" name="" v-model="box" id="">
+        <input type="color" name="" v-model="box1" id="">
+        
+    </div>
+    </div>
+    <script>
+        const app = {
+            data() {
+                return {
+                    row: [0,1,2,3,4,5,6,7,8],
+                    col: ['a','b','c','d','e','f','g','h'],
+                    box: 'gray',
+                    box1: 'aquamarine',
+                    cellname: ''   
+                }
+            },
+            methods: {
+                showcell : function(id) {
+                    this.cellname = id
+                }
+            },
+        }
+        Vue.createApp(app).mount('#app1')
+    </script>
+</body>
+</html>
